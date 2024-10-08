@@ -92,6 +92,9 @@ public class BuildingEntity extends BaseEntity {
 
     @Column(name = "managerphone")
     private String managerPhone;
+
+    @OneToMany(mappedBy = "building",fetch = FetchType.LAZY)
+    private List<RentAreaEntity> rentAreas = new ArrayList<>();
 //
 //    @Column(name = "image")
 //    private String image;
@@ -347,4 +350,11 @@ public class BuildingEntity extends BaseEntity {
         this.userEntities = userEntities;
     }
 
+    public List<RentAreaEntity> getRentAreas() {
+        return rentAreas;
+    }
+
+    public void setRentAreas(List<RentAreaEntity> rentAreas) {
+        this.rentAreas = rentAreas;
+    }
 }
