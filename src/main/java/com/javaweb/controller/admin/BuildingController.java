@@ -50,7 +50,7 @@ public class BuildingController {
     public ModelAndView buildingEdit(@ModelAttribute("buildingEdit") BuildingDTO buildingDTO , HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/edit");
 
-
+//        ds district và typeCode từ enums đẩy lên
         mav.addObject("listDistricts", District.type());
         mav.addObject("listTypeCode", TypeCode.listTypeCode());
 
@@ -67,6 +67,7 @@ public class BuildingController {
         buildingDTO.setFloorArea(123L);
         mav.addObject("buildingEdit",buildingDTO);
 
+        //        ds district và typeCode từ enums đẩy lên
         mav.addObject("listDistricts", District.type());
         mav.addObject("listTypeCode", TypeCode.listTypeCode());
         return mav;

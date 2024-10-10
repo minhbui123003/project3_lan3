@@ -77,6 +77,19 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
             where.append(" )  ");
         }
 
+        Long rentPriceFrom = buildingSearchBuilder.getRentPriceFrom();
+        Long rentPriceTo = buildingSearchBuilder.getRentPriceTo();
+        if(NumberDifferent0.checkNumberKhacO(rentPriceFrom) && NumberDifferent0.checkNumberKhacO(rentPriceTo)) {
+
+            if(NumberDifferent0.checkNumberKhacO(rentPriceFrom)) {
+                where.append(" and b.rentprice >= " +rentPriceFrom +"   ");
+            }
+            if(NumberDifferent0.checkNumberKhacO(rentPriceTo)) {
+                where.append(" and b.rentprice <= " +rentPriceTo +"   ");
+            }
+
+        }
+
         List<String> typeCode = buildingSearchBuilder.getTypeCode();
         if(typeCode!=null && typeCode.size() != 0)  {
             where.append("  and (  ");
@@ -115,4 +128,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         // Get results
         return query.getResultList();
     }
+
+
 }

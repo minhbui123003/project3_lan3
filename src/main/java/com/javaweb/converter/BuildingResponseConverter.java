@@ -19,7 +19,7 @@ public class BuildingResponseConverter {
 
     public BuildingSearchResponse toBuildingSearchResponse (BuildingEntity item){
         BuildingSearchResponse buildingSearchResponse = modelMapper.map(item, BuildingSearchResponse.class);
-        buildingSearchResponse.setAddress(item.getStreet()+" "+item.getWard()+""+item.getDistrict());
+        buildingSearchResponse.setAddress(item.getStreet()+" , "+item.getWard()+" , "+item.getDistrict());
 
         List<RentAreaEntity> rentAreas = item.getRentAreas();
         String listRentArea = rentAreas.stream().map(value -> value.getValue().toString() ).collect(Collectors.joining(","));

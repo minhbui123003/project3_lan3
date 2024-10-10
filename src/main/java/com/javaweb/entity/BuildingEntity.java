@@ -24,10 +24,10 @@ public class BuildingEntity extends BaseEntity {
     private String structure;
 
     @Column(name = "numberofbasement")
-    private Integer numberOfBasement;
+    private Long numberOfBasement;
 
     @Column(name = "floorarea")
-    private Integer floorArea;
+    private Long floorArea;
 
     @Column(name = "direction")
     private String direction;
@@ -36,7 +36,7 @@ public class BuildingEntity extends BaseEntity {
     private String  level;
 
     @Column(name = "rentprice")
-    private Integer rentPrice;
+    private Long rentPrice;
 
     @Column(name = "rentpricedescription")
     private String rentPriceDesc;
@@ -70,7 +70,7 @@ public class BuildingEntity extends BaseEntity {
     private String decorTime;
 
     @Column(name = "brokeragefee")
-    private String brokerageFee;
+    private Double brokerageFee;
 
     @Column(name = "type")
     private String typeCode;
@@ -143,19 +143,19 @@ public class BuildingEntity extends BaseEntity {
         this.structure = structure;
     }
 
-    public Integer getNumberOfBasement() {
+    public Long getNumberOfBasement() {
         return numberOfBasement;
     }
 
-    public void setNumberOfBasement(Integer numberOfBasement) {
+    public void setNumberOfBasement(Long numberOfBasement) {
         this.numberOfBasement = numberOfBasement;
     }
 
-    public Integer getFloorArea() {
+    public Long getFloorArea() {
         return floorArea;
     }
 
-    public void setFloorArea(Integer floorArea) {
+    public void setFloorArea(Long floorArea) {
         this.floorArea = floorArea;
     }
 
@@ -175,11 +175,11 @@ public class BuildingEntity extends BaseEntity {
         this.level = level;
     }
 
-    public Integer getRentPrice() {
+    public Long getRentPrice() {
         return rentPrice;
     }
 
-    public void setRentPrice(Integer rentPrice) {
+    public void setRentPrice(Long rentPrice) {
         this.rentPrice = rentPrice;
     }
 
@@ -271,11 +271,11 @@ public class BuildingEntity extends BaseEntity {
         this.decorTime = decorTime;
     }
 
-    public String getBrokerageFee() {
+    public Double getBrokerageFee() {
         return brokerageFee;
     }
 
-    public void setBrokerageFee(String brokerageFee) {
+    public void setBrokerageFee(Double brokerageFee) {
         this.brokerageFee = brokerageFee;
     }
 

@@ -269,7 +269,8 @@
         <div style="margin-top: 80px"></div>
         <div class="row">
           <div class="col-xs-12">
-            <table  id="tableList" class="table table-striped table-bordered table-hover"
+          <div class="scrollable-table">
+           <table  id="tableList" class="table table-striped table-bordered table-hover"
             >
               <thead>
               <tr>
@@ -338,11 +339,21 @@
               </tbody>
             </table>
           </div>
+          </div>
           <!-- /.span -->
         </div>
       </div><!-- /.page-content -->
     </div>
   </div><!-- /.main-content -->
+
+<style>
+.scrollable-table {
+    max-height: 400px; /* Đặt chiều cao tối đa cho bảng */
+    overflow-y: auto;  /* Thêm thanh cuộn theo chiều dọc */
+    overflow-x: hidden; /* Ẩn thanh cuộn theo chiều ngang (tuỳ chọn) */
+}
+</style>
+
 
   <div class="modal fade" id="assignmentBuildingModal" role="dialog" style="font-family: 'Times New Roman', Times, serif;">
     <div class="modal-dialog">
@@ -489,16 +500,37 @@
     // function xóa 1 tòa nahf
     function deleteBuilding(data){
       var buildingId =  [data];
-      deleteBuildings(buildingId);
+
+     var a = confirm("Bạn có muốn xóa không?");
+      if(a==true)
+        {
+          console.log("sdf");
+        deleteBuildings(buildingId);
+        window.location.href= "${buildingListURL}";
+      }
+      else
+        {
+          alert("bạn đã hủy tác vụ");
+        }
     }
 
      $('#btnDeleteBuilding').click(function (e) {
       e.preventDefault();
+      var xac_nhan = confirm("bạn có muốn xóa ko ");
+
       var buildingIds = $('#tableList').find('tbody input[type = checkbox]:checked')
               .map(function () {
                 return $(this).val();
               }).get();
-      deleteBuildings(buildingIds);
+      if(xac_nhan==true){
+        deleteBuildings(buildingIds);
+
+      }
+      else
+        {
+          alert("bạn đã hủy tác vụ");
+        }
+       window.location.href= "${buildingListURL}";
     });
 
      function deleteBuildings(data){

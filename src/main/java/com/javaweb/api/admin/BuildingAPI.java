@@ -5,12 +5,14 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController(value = "buildingAPIOfAdmin")
 @RequestMapping("/api/building")
+@Transactional
 public class BuildingAPI {
     @Autowired
     private BuildingService buildingService;
@@ -18,13 +20,13 @@ public class BuildingAPI {
     @PostMapping
     public BuildingDTO addOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO) {
 
-        return buildingDTO;
+        BuildingDTO result = buildingService.createBuilding(buildingDTO);
+        return result;
     }
 
     @DeleteMapping("/{ids}")
     public void deleteBuilding(@PathVariable List<Long> ids ) {
-
-        System.out.println("okee");
+        buildingService.deleteBuilding(ids);
     }
 
     @GetMapping("/{id}/staffs")

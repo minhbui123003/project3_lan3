@@ -4,10 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "rentarea")
-public class RentAreaEntity extends BaseEntity{
+public class RentAreaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "value")
     private String value;
@@ -16,14 +16,12 @@ public class RentAreaEntity extends BaseEntity{
     @JoinColumn(name = "buildingid")
     private BuildingEntity building;
 
-    @Override
     public Long getId() {
-        return Id;
+        return id;
     }
 
-    @Override
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getValue() {

@@ -9,6 +9,7 @@
 <%@include file="/common/taglib.jsp" %>
 <c:url var="buildingAPI" value="/api/building"/>
 <c:url var="buildingList" value="/admin/building-list"/>
+<c:url var="editPage" value="/admin/building-edit"/>
 <html>
   <head>
     <title>Thêm Tòa Nhà</title>
@@ -413,7 +414,8 @@
     </div><!-- /.main-content -->
 
 <script>
-  $('#btnAddOrUpdateBuilding').click(function(){
+  $('#btnAddOrUpdateBuilding').click(function(e){
+    e.preventDefault();
     var data = {};
     var typeCode = [];
     var formData = $('#listForm').serializeArray();
@@ -425,23 +427,22 @@
       }
     });
     data['typeCode'] = typeCode;
+    console.log(typeCode);
 
     // call API
-    data["typeCode"] = typeCode;
-    if (typeCode!='') {
-         // Nếu data không rỗng thì thực hiện xử lý
-         addOrUpdataBuilding(data);
+    if (data['typeCode'] && data['typeCode'].length > 0) {
+        addOrUpdataBuilding(data);
+        alert("Thêm Mới success");
+        window.location.href= "${buildingList}";
     }
-    else{
-       $('#btnAddOrUpdateBuilding').click(function (e){
-            e.preventDefault();
-            window.location.href = "${buildingList}"
-        });
-
-
+    else
+    {
+        window.location.href = "${editPage}?error=require";
+        console.log("lỗi");
     }
-
   });
+
+
 
   function addOrUpdataBuilding(data)
   {
@@ -459,6 +460,7 @@
           }
     });
   }
+
         $('#btnCancel').click(function (e) {
             e.preventDefault();
             window.location.href = "${buildingList}";
