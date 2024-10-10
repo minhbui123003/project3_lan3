@@ -95,18 +95,38 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public BuildingDTO createBuilding(BuildingDTO dto) {
+//        cập nhật
        if(dto.getId()!= null){
+
+           BuildingEntity building = buildingRepository.findById(dto.getId()).get();
+           building = buildingConverter.toBuildingEntity(dto);
+           buildingRepository.save(building) ;
+
+           List<String> list = Arrays.asList(dto.getRentArea().split(","));
+
+           List<RentAreaEntity> rentAreaEntities= rentAreaRepository.findAll(dto.getId());
+           for(RentAreaEntity db : rentAreaEntities){
+               rentAreaRepository.delete(db);
+           }
+
+           for (String it: list) {
+               RentAreaEntity rnew = new RentAreaEntity() ;
+               rnew.setValue(it);
+               rnew.setBuilding(building);
+               rentAreaRepository.save(rnew) ;
+           }
 
 
        }
+//       thêm
        else {
-           BuildingEntity bnew = buildingConverter.toBuildingEntity(dto);
-           buildingRepository.save(bnew) ;
+           BuildingEntity building = buildingConverter.toBuildingEntity(dto);
+           buildingRepository.save(building) ;
            List<String> list = Arrays.asList(dto.getRentArea().split(","));
            for (String it: list) {
                RentAreaEntity rnew = new RentAreaEntity() ;
                rnew.setValue(it);
-               rnew.setBuilding(bnew);
+               rnew.setBuilding(building);
                rentAreaRepository.save(rnew) ;
            }
 
@@ -126,6 +146,25 @@ public class BuildingServiceImpl implements BuildingService {
            buildingEntity.getUserEntities().clear();
            buildingRepository.delete(buildingEntity);
        }
+    }
+
+    @Override
+    public BuildingDTO findBuildingById(Long id) {
+       BuildingEntity building = buildingRepository.findById(id).get();
+       BuildingDTO buildingDTO = buildingConverter.toBuildingDTO(building);
+       List<RentAreaEntity> list = rentAreaRepository.findAll(building.getId());
+//       taoj một chuỗi để lưu giá trị của rentAreaValues
+        StringBuilder rentAreaValues = new StringBuilder();
+        for (RentAreaEntity it : list) {
+            if (rentAreaValues.length() > 0) {
+                rentAreaValues.append(", "); // phân cách giữa các giá trị
+            }
+            rentAreaValues.append(it.getValue());
+        }
+
+        // Set chuỗi chứa nhiều giá trị vào DTO
+        buildingDTO.setRentArea(rentAreaValues.toString());
+       return buildingDTO;
     }
 
 }

@@ -61,10 +61,11 @@ public class BuildingController {
     public ModelAndView buildingEdit(@PathVariable("id") Long id, HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/edit");
 //        xuống DB tìm building theo id
-        BuildingDTO buildingDTO = new BuildingDTO();
-        buildingDTO.setId(id);
-        buildingDTO.setName("khánh linh Building");
-        buildingDTO.setFloorArea(123L);
+
+        BuildingDTO buildingDTO = buildingService.findBuildingById(id);
+
+
+//        hiển thị data building lên phần sửa
         mav.addObject("buildingEdit",buildingDTO);
 
         //        ds district và typeCode từ enums đẩy lên

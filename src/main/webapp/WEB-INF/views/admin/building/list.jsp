@@ -504,14 +504,15 @@
      var a = confirm("Bạn có muốn xóa không?");
       if(a==true)
         {
-          console.log("sdf");
         deleteBuildings(buildingId);
-        window.location.href= "${buildingListURL}";
+
+
       }
       else
         {
           alert("bạn đã hủy tác vụ");
         }
+       window.location.href= "${buildingListURL}";
     }
 
      $('#btnDeleteBuilding').click(function (e) {
@@ -524,13 +525,14 @@
               }).get();
       if(xac_nhan==true){
         deleteBuildings(buildingIds);
-
+        location.reload();
+         window.location.href= "${buildingListURL}";
       }
       else
         {
           alert("bạn đã hủy tác vụ");
         }
-       window.location.href= "${buildingListURL}";
+
     });
 
      function deleteBuildings(data){
