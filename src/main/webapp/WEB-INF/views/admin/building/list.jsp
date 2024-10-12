@@ -399,6 +399,7 @@
                   type="button"
                   class="btn btn-default"
                   id="btnAssignmentBuilding"
+                  data-dismiss="modal"
           >
             Giao Tòa Nhà
           </button>

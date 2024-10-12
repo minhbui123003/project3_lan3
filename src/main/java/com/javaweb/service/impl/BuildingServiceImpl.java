@@ -3,9 +3,11 @@ package com.javaweb.service.impl;
 import com.javaweb.converter.BuildingConverter;
 import com.javaweb.converter.BuildingResponseConverter;
 import com.javaweb.converter.BuildingSearchRequestConverter;
+import com.javaweb.entity.AssignmentBuildingEntity;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.entity.UserEntity;
+import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchBuilder;
 import com.javaweb.model.response.BuildingSearchResponse;
@@ -165,6 +167,22 @@ public class BuildingServiceImpl implements BuildingService {
         // Set chuỗi chứa nhiều giá trị vào DTO
         buildingDTO.setRentArea(rentAreaValues.toString());
        return buildingDTO;
+    }
+
+
+    @Override
+//    tìm building rồi xóa nhân viên rồi thêm lại
+    public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) {
+
+        BuildingEntity building = buildingRepository.findById(assignmentBuildingDTO.getBuildingId()).get();
+        building.getUserEntities().clear();
+        for(Long it : assignmentBuildingDTO.getStaffs())
+        {
+            UserEntity staff = userRepository.findById(it).get();
+            building.getUserEntities().add(staff);
+        }
+        buildingRepository.save(building);
+
     }
 
 }

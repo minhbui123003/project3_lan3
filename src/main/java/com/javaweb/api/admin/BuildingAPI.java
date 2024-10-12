@@ -5,6 +5,7 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,10 +38,11 @@ public class BuildingAPI {
 
     @PostMapping("/assignment")
     public void updateAssignmentBuilding (@RequestBody AssignmentBuildingDTO assignmentBuildingDTO) {
-
-        System.out.println(assignmentBuildingDTO);
-        System.out.println("success");
-
+//        gọi hàm update
+        buildingService.updateAssignmentBuilding(assignmentBuildingDTO);
+        System.out.println("Update đã xong");
+        ResponseEntity.noContent().build();
+//        trả lời api
     }
 
 }
