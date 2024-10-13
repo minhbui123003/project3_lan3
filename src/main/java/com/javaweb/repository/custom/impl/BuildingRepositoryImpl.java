@@ -5,6 +5,9 @@ import com.javaweb.entity.BuildingEntity;
 import com.javaweb.model.request.BuildingSearchBuilder;
 import com.javaweb.repository.custom.BuildingRepositoryCustom;
 import com.javaweb.utils.NumberDifferent0;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -101,14 +104,14 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
 
 
     @Override
-    public List<BuildingEntity> findAllBuildings(BuildingSearchBuilder buildingSearchBuilder) {
+    public Page<BuildingEntity> findAllBuildings(BuildingSearchBuilder buildingSearchBuilder , Pageable pageable) {
         System.out.println("Connecting with database building");
 
 //        StringBuilder sql = new StringBuilder("SELECT b.id, b.name, b.numberofbasement, b.ward, b.street, b.district, b.managername," +
 //                " b.managerphone, b.floorarea, b.rentprice, b.servicefee FROM building b");
         StringBuilder sql = new StringBuilder("select b.* from building b");
 
-        // Join clause
+        //  Join các bảng lại
         joinTable(buildingSearchBuilder, sql);
 
         // Where clause
@@ -116,17 +119,27 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
         queryNomal(buildingSearchBuilder, where);
         querySpecial(buildingSearchBuilder, where);
 
-        // Add where conditions to sql
+        // thêm câu lệnh where
         sql.append(where);
-        sql.append(" GROUP BY b.id");
 
-        System.out.println(sql.toString());
+        // Tính tổng số bản ghi và ta biết mỗi trang có bao nhiêu bản thì có thể tính d
+        String countSql = "SELECT COUNT(*) FROM (" + sql.toString() + ") AS countQuery";
+        Query countQuery = entityManager.createNativeQuery(countSql);
+        Long total = ((Number) countQuery.getSingleResult()).longValue();
+
+        // Thêm điều kiện phân trang
+        sql.append(" LIMIT ").append(pageable.getPageSize()).append(" OFFSET ").append(pageable.getPageNumber() * pageable.getPageSize());
+
+        System.out.println("câu lệnh sql : "+sql);
 
         // Execute the query
         Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
 
         // Get results
-        return query.getResultList();
+        List<BuildingEntity> resultList = query.getResultList();
+
+        // Tạo Page kết quả
+        return new PageImpl<>(resultList, pageable, total);
     }
 
 

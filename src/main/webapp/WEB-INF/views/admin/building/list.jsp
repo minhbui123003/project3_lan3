@@ -338,6 +338,30 @@
               </c:forEach>
               </tbody>
             </table>
+
+<%--            thêm phần phân trang--%>
+           <div class="pagination font-18 " >
+              <c:if test="${currentPage > 0}">
+                  <a href="?page=${currentPage - 1}" class="previous">Previous</a>
+              </c:if>
+
+              <c:forEach begin="0" end="${totalPages - 1}" var="i">
+                  <c:choose>
+                      <c:when test="${i == currentPage}">
+                          <span class="current">${i + 1}</span> <!-- Trang hiện tại -->
+                      </c:when>
+                      <c:otherwise>
+                          <a href="?page=${i}">${i + 1}</a> <!-- Các trang khác -->
+                      </c:otherwise>
+                  </c:choose>
+              </c:forEach>
+
+              <c:if test="${currentPage < totalPages - 1}">
+                  <a href="?page=${currentPage + 1}" class="next">Next</a>
+              </c:if>
+          </div>
+
+
           </div>
           </div>
           <!-- /.span -->
@@ -347,6 +371,14 @@
   </div><!-- /.main-content -->
 
 <style>
+
+.font-18{
+  margin-top: 5px;
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  float: right;
+}
 .scrollable-table {
     max-height: 400px; /* Đặt chiều cao tối đa cho bảng */
     overflow-y: auto;  /* Thêm thanh cuộn theo chiều dọc */
@@ -506,8 +538,6 @@
       if(a==true)
         {
         deleteBuildings(buildingId);
-
-
       }
       else
         {
@@ -526,13 +556,12 @@
               }).get();
       if(xac_nhan==true){
         deleteBuildings(buildingIds);
-        location.reload();
-         window.location.href= "${buildingListURL}";
       }
       else
         {
           alert("bạn đã hủy tác vụ");
         }
+       window.location.href= "${buildingListURL}";
 
     });
 

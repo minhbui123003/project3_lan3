@@ -18,6 +18,9 @@ import com.javaweb.repository.RentAreaRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.BuildingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,28 +74,31 @@ public class BuildingServiceImpl implements BuildingService {
 
 
     @Override
-    public List<BuildingSearchResponse> findAllBuildings(Map<String, Object> params, List<String> typeCode) {
+    public Page<BuildingSearchResponse> findAllBuildings(Map<String, Object> params, List<String> typeCode , Pageable pageable) {
         BuildingSearchBuilder buildingSearchBuilder = buildingSearchRequestConverter.toBuildingSearchBuilder( params,typeCode);
-        List<BuildingEntity> listBuildingEntities = buildingRepository.findAllBuildings(buildingSearchBuilder);
+
+        Page<BuildingEntity> listBuildingEntities = buildingRepository.findAllBuildings(buildingSearchBuilder , pageable);
+//        áp dụng phân trang
 
         List<BuildingSearchResponse> result = new ArrayList<BuildingSearchResponse>();
 
 
-        for(BuildingEntity item : listBuildingEntities){
+        for(BuildingEntity item : listBuildingEntities.getContent()){
             BuildingSearchResponse buildingSearchResponse = buildingResponseConverter.toBuildingSearchResponse(item);
 
             // Thêm các trường audit nếu chưa có
-            buildingSearchResponse.setCreatedDate(item.getCreatedDate()); // Thêm
-            buildingSearchResponse.setCreatedBy(item.getCreatedBy()); // Thêm
-            buildingSearchResponse.setModifiedDate(item.getModifiedDate()); // Thêm
-            buildingSearchResponse.setModifiedBy(item.getModifiedBy()); // Thêm
+//            buildingSearchResponse.setCreatedDate(item.getCreatedDate()); // Thêm
+//            buildingSearchResponse.setCreatedBy(item.getCreatedBy()); // Thêm
+//            buildingSearchResponse.setModifiedDate(item.getModifiedDate()); // Thêm
+//            buildingSearchResponse.setModifiedBy(item.getModifiedBy()); // Thêm
 
             result.add(buildingSearchResponse);
 
         }
 
 
-        return result;
+//        return result;
+        return new PageImpl<>(result, pageable, listBuildingEntities.getTotalElements());
     }
 
     @Override

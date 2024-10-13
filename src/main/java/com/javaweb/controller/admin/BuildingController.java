@@ -9,6 +9,9 @@ import com.javaweb.service.BuildingService;
 import com.javaweb.service.IUserService;
 import com.javaweb.utils.DistrictCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,19 +30,23 @@ public class BuildingController {
     @Autowired
     private BuildingService buildingService;
 
+//    thêm @ @PageableDefault(size = ...) Pageable pageableể quản lý phân trang
     @RequestMapping(value = "/admin/building-list",method = RequestMethod.GET)
-    public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest  , @RequestParam Map<String, Object> params, @RequestParam  (name="typeCode", required=false) List<String> typeCode , HttpServletRequest request){
+    public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, @PageableDefault(size = 2) Pageable pageable  , @RequestParam Map<String, Object> params, @RequestParam  (name="typeCode", required=false) List<String> typeCode , HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/list");
 //        xuống DB laays data
-             mav.addObject("modelSearch",buildingSearchRequest);
+        mav.addObject("modelSearch",buildingSearchRequest);
 
-            List<BuildingSearchResponse> responseList = buildingService.findAllBuildings(params, typeCode);
-            mav.addObject("buildingList", responseList);
+        Page<BuildingSearchResponse> responseList = buildingService.findAllBuildings(params, typeCode,pageable);
+//        lấy danh sách nội dung hiển thị
+        mav.addObject("buildingList", responseList.getContent());
+        // Tổng số trang
+        mav.addObject("totalPages", responseList.getTotalPages());
+        // Trang hiện tại
+        mav.addObject("currentPage", responseList.getNumber());
 
 
-
-
-
+//        các ds nhân viên , tỉnh- thành phố, nhà
         mav.addObject("listStaffs",userService.getStaffs());
         mav.addObject("listDistricts", District.type());
         mav.addObject("listTypeCode", TypeCode.listTypeCode());
@@ -50,7 +57,8 @@ public class BuildingController {
     public ModelAndView buildingEdit(@ModelAttribute("buildingEdit") BuildingDTO buildingDTO , HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/building/edit");
 
-//        ds district và typeCode từ enums đẩy lên
+
+//        các ds  tỉnh-thành phố , nhà từ enums
         mav.addObject("listDistricts", District.type());
         mav.addObject("listTypeCode", TypeCode.listTypeCode());
 
@@ -68,7 +76,8 @@ public class BuildingController {
 //        hiển thị data building lên phần sửa
         mav.addObject("buildingEdit",buildingDTO);
 
-        //        ds district và typeCode từ enums đẩy lên
+
+//        các ds  tỉnh- thành phố, nhà từ enums
         mav.addObject("listDistricts", District.type());
         mav.addObject("listTypeCode", TypeCode.listTypeCode());
         return mav;

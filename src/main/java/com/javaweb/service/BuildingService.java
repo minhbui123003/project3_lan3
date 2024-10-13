@@ -4,6 +4,8 @@ import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,7 @@ public interface BuildingService {
 //    trả về ds nhân viên
     ResponseDTO listStaffs(Long buildingId);
 //    tìm tất cả hoặc 1 tòa nhà
-    List<BuildingSearchResponse> findAllBuildings(Map<String, Object> params, List<String> typeCode);
+    Page<BuildingSearchResponse> findAllBuildings(Map<String, Object> params, List<String> typeCode , Pageable pageable);
 //    tạo tòa nhà hoặc sửa tòa nhà
     BuildingDTO createBuilding(BuildingDTO buildingDTO);
 //    xóa 1 hoặc nhiều tòa nhà

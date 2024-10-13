@@ -430,7 +430,7 @@
     console.log(typeCode);
 
     // call API
-    if (data['typeCode'] && data['typeCode'].length > 0) {
+    if (data['typeCode'] && data['typeCode'].length > 0&& data['rentArea']!='') {
         addOrUpdataBuilding(data);
         alert("Thêm Mới success");
         window.location.href= "${buildingList}";
