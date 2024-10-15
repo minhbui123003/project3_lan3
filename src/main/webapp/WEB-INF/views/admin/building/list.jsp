@@ -340,26 +340,27 @@
             </table>
 
 <%--            thêm phần phân trang--%>
-           <div class="pagination font-18 " >
-              <c:if test="${currentPage > 0}">
-                  <a href="?page=${currentPage - 1}" class="previous">Previous</a>
-              </c:if>
+          <div class="pagination font-18">
+            <c:if test="${currentPage > 0}">
+                <a href="?page=${currentPage - 1}&<c:forEach var='entry' items='${paramMap}'>${entry.key}=${entry.value}&</c:forEach>" class="previous">Previous</a>
+            </c:if>
 
-              <c:forEach begin="0" end="${totalPages - 1}" var="i">
-                  <c:choose>
-                      <c:when test="${i == currentPage}">
-                          <span class="current">${i + 1}</span> <!-- Trang hiện tại -->
-                      </c:when>
-                      <c:otherwise>
-                          <a href="?page=${i}">${i + 1}</a> <!-- Các trang khác -->
-                      </c:otherwise>
-                  </c:choose>
-              </c:forEach>
+            <c:forEach begin="0" end="${totalPages - 1}" var="i">
+                <c:choose>
+                    <c:when test="${i == currentPage}">
+                        <span class="current">${i + 1}</span>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="?page=${i}&<c:forEach var='entry' items='${paramMap}'>${entry.key}=${entry.value}&</c:forEach>">${i + 1}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
 
-              <c:if test="${currentPage < totalPages - 1}">
-                  <a href="?page=${currentPage + 1}" class="next">Next</a>
-              </c:if>
-          </div>
+            <c:if test="${currentPage < totalPages - 1}">
+                <a href="?page=${currentPage + 1}&<c:forEach var='entry' items='${paramMap}'>${entry.key}=${entry.value}&</c:forEach>" class="next">Next</a>
+            </c:if>
+        </div>
+
 
 
           </div>

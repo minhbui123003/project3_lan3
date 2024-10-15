@@ -37,6 +37,8 @@ public class BuildingController {
 //        xuống DB laays data
         mav.addObject("modelSearch",buildingSearchRequest);
 
+        mav.addObject("paramMap", params);
+
         Page<BuildingSearchResponse> responseList = buildingService.findAllBuildings(params, typeCode,pageable);
 //        lấy danh sách nội dung hiển thị
         mav.addObject("buildingList", responseList.getContent());
