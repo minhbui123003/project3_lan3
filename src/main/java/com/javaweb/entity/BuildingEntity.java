@@ -93,7 +93,7 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "managerphone")
     private String managerPhone;
 
-    @OneToMany(mappedBy = "building",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "building",fetch = FetchType.LAZY , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RentAreaEntity> rentAreas = new ArrayList<>();
 //
 //    @Column(name = "image")

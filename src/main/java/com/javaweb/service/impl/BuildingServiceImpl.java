@@ -112,10 +112,10 @@ public class BuildingServiceImpl implements BuildingService {
 
            List<String> list = Arrays.asList(dto.getRentArea().split(","));
 
-           List<RentAreaEntity> rentAreaEntities= rentAreaRepository.findAll(dto.getId());
-           for(RentAreaEntity db : rentAreaEntities){
-               rentAreaRepository.delete(db);
-           }
+//           List<RentAreaEntity> rentAreaEntities= rentAreaRepository.findAll(dto.getId());
+//           for(RentAreaEntity db : rentAreaEntities){
+//               rentAreaRepository.delete(db);
+//           }
 
            for (String it: list) {
                RentAreaEntity rnew = new RentAreaEntity() ;
@@ -148,10 +148,10 @@ public class BuildingServiceImpl implements BuildingService {
        {
            BuildingEntity buildingEntity = buildingRepository.findById(id).get();
            List<RentAreaEntity> rentAreaEntities  = rentAreaRepository.findAll(id);
-           for(RentAreaEntity it : rentAreaEntities){
-               rentAreaRepository.delete(it);
-           }
-           buildingEntity.getUserEntities().clear();
+//           for(RentAreaEntity it : rentAreaEntities){
+//               rentAreaRepository.delete(it);
+//           }
+//           buildingEntity.getUserEntities().clear();
            buildingRepository.delete(buildingEntity);
        }
     }
@@ -181,7 +181,7 @@ public class BuildingServiceImpl implements BuildingService {
     public void updateAssignmentBuilding(AssignmentBuildingDTO assignmentBuildingDTO) {
 
         BuildingEntity building = buildingRepository.findById(assignmentBuildingDTO.getBuildingId()).get();
-        building.getUserEntities().clear();
+//        building.getUserEntities().clear();
         for(Long it : assignmentBuildingDTO.getStaffs())
         {
             UserEntity staff = userRepository.findById(it).get();
