@@ -107,7 +107,7 @@ public class BuildingServiceImpl implements BuildingService {
        if(dto.getId()!= null){
 
            BuildingEntity building = buildingRepository.findById(dto.getId()).get();
-           building = buildingConverter.toBuildingEntity(dto);
+           building = buildingConverter.toBuildingDTO(dto);
            buildingRepository.save(building) ;
 
            List<String> list = Arrays.asList(dto.getRentArea().split(","));
@@ -128,7 +128,7 @@ public class BuildingServiceImpl implements BuildingService {
        }
 //       thêm
        else {
-           BuildingEntity building = buildingConverter.toBuildingEntity(dto);
+           BuildingEntity building = buildingConverter.toBuildingDTO(dto);
            buildingRepository.save(building) ;
            List<String> list = Arrays.asList(dto.getRentArea().split(","));
            for (String it: list) {
@@ -156,10 +156,11 @@ public class BuildingServiceImpl implements BuildingService {
        }
     }
 
+    @Transactional
     @Override
     public BuildingDTO findBuildingById(Long id) {
        BuildingEntity building = buildingRepository.findById(id).get();
-       BuildingDTO buildingDTO = buildingConverter.toBuildingDTO(building);
+       BuildingDTO buildingDTO = buildingConverter.toBuildingEntity(building);
        List<RentAreaEntity> list = rentAreaRepository.findAll(building.getId());
 //       taoj một chuỗi để lưu giá trị của rentAreaValues
         StringBuilder rentAreaValues = new StringBuilder();

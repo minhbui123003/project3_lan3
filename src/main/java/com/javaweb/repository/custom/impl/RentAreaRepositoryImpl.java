@@ -22,7 +22,14 @@ public class RentAreaRepositoryImpl implements RentAreaRepositoryCustom {
     @Override
     public List<RentAreaEntity> findAll(Long buildingId) {
         String sql = "SELECT * FROM rentarea WHERE rentarea.buildingid = " + buildingId +" "  ;
-        Query query =entityManager.createNativeQuery(sql,RentAreaEntity.class) ;
-        return query.getResultList() ;
+//        Query query =entityManager.createNativeQuery(sql,RentAreaEntity.class) ;
+//        return query.getResultList() ;
+        try {
+            Query query = entityManager.createNativeQuery(sql, RentAreaEntity.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace(); // in chi tiết lỗi ra console
+            throw e; // ném lại exception để xử lý sau
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class BuildingConverter {
-    public BuildingDTO toBuildingDTO (BuildingEntity buildingEntity) {
+    public BuildingDTO toBuildingEntity (BuildingEntity buildingEntity) {
 
         BuildingDTO buildingDTO = new BuildingDTO();
         buildingDTO.setId(buildingEntity.getId());
@@ -48,7 +48,7 @@ public class BuildingConverter {
 
         return buildingDTO;
     }
-   public  BuildingEntity toBuildingEntity (BuildingDTO buildingDTO) {
+   public  BuildingEntity toBuildingDTO (BuildingDTO buildingDTO) {
         BuildingEntity buildingEntity = new BuildingEntity();
         buildingEntity.setId(buildingDTO.getId());
         buildingEntity.setName(buildingDTO.getName());
