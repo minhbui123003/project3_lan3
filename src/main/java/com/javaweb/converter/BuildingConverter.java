@@ -39,6 +39,7 @@ public class BuildingConverter {
         buildingDTO.setManagerPhone(buildingEntity.getManagerPhone());
         buildingDTO.setPayment(buildingEntity.getPayment());
         buildingDTO.setNote(buildingEntity.getNote());
+        buildingDTO.setImage(buildingEntity.getAvatar());
 
 //        xử lý phần rentArea cho diện tích
         List<RentAreaEntity> rentareas = buildingEntity.getRentAreas();

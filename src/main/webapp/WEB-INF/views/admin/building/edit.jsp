@@ -364,7 +364,7 @@
 <%--                      />--%>
 <%--                      Tầng Trệt--%>
 <%--                    </label>--%>
-                       <form:checkboxes cssStyle="margin-left: 15px;" items="${listTypeCode}" path="typeCode" />
+                       <form:checkboxes cssStyle="margin-left: 15px;" items="${listTypeCode}" path="typeCode"  />
                   </div>
                 </div>
 <%--                27--%>
@@ -457,6 +457,8 @@
           },
           error: function (response) {
             console.log("no, have a problem" + response);
+            window.location.href = "${editPage}?error=require";
+
           }
     });
   }
