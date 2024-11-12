@@ -5,6 +5,7 @@ import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchBuilder;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.IUserService;
 import com.javaweb.utils.DistrictCode;
@@ -36,6 +37,13 @@ public class BuildingController {
         ModelAndView mav = new ModelAndView("admin/building/list");
         //   xuống DB laays data
         mav.addObject("modelSearch",buildingSearchRequest);
+
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            buildingSearchRequest.setStaffId(staffId);
+            mav.addObject("staffId",staffId);
+            params.put("staffId", staffId) ;
+        }
 
         mav.addObject("paramMap", params);
         Page<BuildingSearchResponse> responseList = buildingService.findAllBuildings(params, typeCode,pageable);

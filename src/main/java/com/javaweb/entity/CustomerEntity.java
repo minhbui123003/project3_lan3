@@ -32,6 +32,17 @@ public class CustomerEntity extends BaseEntity  {
     @OneToMany(mappedBy = "customerEntity",fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<TransactionEntity> transactionEntities = new ArrayList<>() ;
 
+    @Column(name = "is_active")
+    private boolean isActive;
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
     @Override
     public Long getId() {
         return id;
@@ -105,4 +116,8 @@ public class CustomerEntity extends BaseEntity  {
     public void setTransactionEntities(List<TransactionEntity> transactionEntities) {
         this.transactionEntities = transactionEntities;
     }
+    public CustomerEntity() {
+        this.isActive = true; // Thiết lập mặc định cho khách hàng mới
+    }
+
 }

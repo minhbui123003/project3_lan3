@@ -186,9 +186,41 @@
     </c:if>
 
 
+
+
         <!-- PAGE CONTENT ENDS -->
     </div><!-- /.page-content -->
 
+</div>
+
+
+<div class="modal fade" id="TransactionCustomerModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Theo Giao Dịch Với Khách Hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" style="margin-top: -27px;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped table-bordered table-hover" style="text-align: center;"
+                       id="staffList">
+
+                    <tbody class="table-group-divider">
+                    <tr>
+                        <td style="text-align: center;">Chi Tiết Giao Dịch</td>
+                        <td style="text-align: center;"> <input type="text" id="note"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <input type="hidden" name="customerId" id="customerId">
+                <input type="hidden" name="code" id="code">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnaddTransaction">Thêm Giao Dịch</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -215,10 +247,17 @@
         $.each(formData,function (k,v){
             data["" +v.name + ""] = v.value ;
         }) ;
-        if(data['fullname']!="")
+        if(data['fullname']!="" && data['phone']!="")
         {
             addorupdate(data) ;
             window.location.href = "${customerListURL}";
+            swal({
+                       title : "Thông báo",
+                       icon :"success",
+                       text :"Bạn Đã Thêm Hoặc Cập Nhật Thành Công",
+                       confirmButtonText: "OK",
+                       confirmButtonClass: "btn btn-success"
+            });
         }
         else
         {
@@ -234,16 +273,8 @@
             data : JSON.stringify(data),
             contentType :"application/json",
             dataType:"JSON",
-            success:function (respond,status, xhr) {
-                if(xhr.status === 200 || xhr.status === 204){
-                   swal({
-                       title : "Thông báo",
-                       icon :"success",
-                       text :"Bạn Đã Thêm Hoặc Cập Nhật Thành Công",
-                       confirmButtonText: "OK",
-                       confirmButtonClass: "btn btn-success"
-                   })
-                }
+            success:function (respond) {
+                console.log("okee");
             },
             error : function (respond) {
                 console.log("fail") ;

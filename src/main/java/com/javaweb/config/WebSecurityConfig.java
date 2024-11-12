@@ -40,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
+//    phân quyeenf thông qua form login
     @Override
     protected void configure(HttpSecurity http) throws Exception {
                 http.csrf().disable()

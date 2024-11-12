@@ -1,12 +1,10 @@
 package com.javaweb.api.admin;
 
 
-import com.javaweb.model.dto.AssignmentBuildingDTO;
-import com.javaweb.model.dto.AssignmentCustomerDTO;
-import com.javaweb.model.dto.BuildingDTO;
-import com.javaweb.model.dto.CustomerDTO;
+import com.javaweb.model.dto.*;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.service.ICustomerService;
+import com.javaweb.service.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +18,9 @@ import java.util.List;
 public class CustomerAPI {
     @Autowired
     private ICustomerService customerService;
+
+    @Autowired
+    private ITransactionService transactionService;
 
     // hàm load giao nhân viên
     @GetMapping("/{id}/staffs")
@@ -47,8 +48,16 @@ public class CustomerAPI {
 //        gọi hàm update
         customerService.updateAssignmentCustomer(assignmentCustomerDTO);
         System.out.println("Update đã xong");
-        ResponseEntity.noContent().build();
-//        trả lời api
+    }
+
+    @PostMapping("/transactionof")
+    public TransactionDTO addTransactionCustomer(@RequestBody TransactionDTO transactionDTO){
+        return transactionService.insertTran(transactionDTO) ;
+    }
+
+    @DeleteMapping ("/transactionof/{id}")
+    public void deleteTransactionCustomer(@PathVariable Long id){
+        transactionService.delete(id) ;
     }
 
 

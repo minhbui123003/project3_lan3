@@ -410,14 +410,15 @@
                     <div class="col-xs-9"></div>
                     <c:if  test="${not empty buildingEdit.id}">
                       <button  class="btn btn-success" id="btnAddOrUpdateBuilding"> Cập nhật tòa nhà </button>
-                      <button class="btn btn-success" id="btnCancel">Hủy thao tác</button>
+                      <button class="btn btn-danger" id="btnCancel">Hủy thao tác</button>
                     </c:if>
                     <c:if test="${empty buildingEdit.id}">
                       <button  class="btn btn-success" id="btnAddOrUpdateBuilding"> Thêm mới tòa nhà</button>
-                      <button class="btn btn-success" id="btnCancel">Hủy thao tác</button>
+                      <button class="btn btn-danger" id="btnCancel">Hủy thao tác</button>
                     </c:if>
                   </div>
                 </div>
+
                 <form:hidden path="id" id="buildingId" />
               </form>
             </div>
@@ -435,7 +436,26 @@
     max-height: 300px; /* Chiều cao tối đa để giữ cho hình ảnh không quá lớn */
     object-fit: cover; /* Căn chỉnh hình ảnh để không bị vỡ */
     margin-top: 50px; /* Khoảng cách trên cùng */
+
 }
+/* CSS cho nút */
+#btnAddOrUpdateBuilding,
+#btnCancel {
+    border-radius: 5px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* Hiệu ứng hover */
+#btnAddOrUpdateBuilding:hover,
+#btnCancel:hover {
+    transform: translateY(-2px); /* Nổi lên nhẹ */
+    background-color: #4e9a51; /* Màu đậm hơn cho nút 'Thêm' hoặc 'Cập nhật' */
+}
+
+#btnCancel:hover {
+    background-color: #c9302c; /* Màu đậm hơn cho nút 'Hủy' */
+}
+
 </style>
 <script>
 

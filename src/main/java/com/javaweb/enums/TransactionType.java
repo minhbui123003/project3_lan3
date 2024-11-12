@@ -1,6 +1,7 @@
 package com.javaweb.enums;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -17,7 +18,7 @@ public enum TransactionType {
     }
 
     public static Map<String,String> transactionType(){
-        Map<String,String> listType = new TreeMap<>();
+        Map<String,String> listType = new LinkedHashMap<>();
         for(TransactionType item : TransactionType.values()){
             listType.put(item.toString() , item.name);
         }

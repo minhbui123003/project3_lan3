@@ -222,6 +222,7 @@
               </div>
             </div>
 
+        <security:authorize access="hasRole('MANAGER')">
             <div class="pull-right">
               <a href="/admin/building-edit">
                 <button style="border-radius: 2px" type="button" class="btn btn-success" title="thêm tòa nhà">
@@ -263,6 +264,8 @@
                 </svg>
               </button>
             </div>
+        </security:authorize>
+
           </div>
         </div>
 
@@ -316,6 +319,7 @@
                 <td>${item.brokerageFee}</td>
                 <td>
                   <div class="hidden-sm hidden-xs btn-group">
+                  <security:authorize access="hasRole('MANAGER')">
                     <button style="border-radius: 2px; margin-right: 3px;"
                             class="btn btn-xs btn-success"
                             title="Giao tòa nhà"
@@ -326,14 +330,16 @@
                               class="ace-icon glyphicon glyphicon-list bigger-120"
                       ></i>
                     </button>
+                  </security:authorize>
 
                     <a style="border-radius: 2px; margin-right: 3px;" href="/admin/building-edit-${item.id}"  class="btn btn-xs btn-info" title="sửa tòa nhà">
                       <i class="ace-icon fa fa-pencil bigger-120"></i>
                     </a>
-
-                    <button style="border-radius: 2px" class="btn btn-xs btn-danger" title="xóa tòa nhà" onclick="deleteBuilding(${item.id})">
-                      <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                    </button>
+                    <security:authorize access="hasRole('MANAGER')">
+                        <button style="border-radius: 2px" class="btn btn-xs btn-danger" title="xóa tòa nhà" onclick="deleteBuilding(${item.id})">
+                          <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                        </button>
+                    </security:authorize>
                   </div>
                 </td>
               </tr>

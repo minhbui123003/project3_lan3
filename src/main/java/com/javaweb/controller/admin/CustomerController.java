@@ -3,9 +3,12 @@ package com.javaweb.controller.admin;
 
 import com.javaweb.converter.CustomerConverter;
 import com.javaweb.entity.CustomerEntity;
+import com.javaweb.entity.TransactionEntity;
 import com.javaweb.enums.TransactionType;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.repository.CustomerRepository;
+import com.javaweb.repository.TransactionRepository;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.ICustomerService;
 import com.javaweb.service.IUserService;
 import com.javaweb.utils.DisplayTagUtils;
@@ -34,10 +37,19 @@ public class CustomerController {
     private CustomerRepository customerRepository;
     @Autowired
     private CustomerConverter customerConverter;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @RequestMapping(value = "/admin/customer-list",method = RequestMethod.GET)
     public ModelAndView customerList(@ModelAttribute CustomerDTO customerDTO, @RequestParam Map<String ,Object> params, HttpServletRequest request){
         ModelAndView mav = new ModelAndView("admin/customer/list");
+
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            params.put("managementStaff", staffId) ;
+        }else{
+            params.put("managementStaff",params.get("managementStaff")) ;
+        }
 
 //        giữ lại data khi tìm kiếm
         mav.addObject("modalSearch",customerDTO) ;
@@ -72,9 +84,22 @@ public class CustomerController {
         CustomerEntity customerEntity = customerRepository.findById(id).get();
         CustomerDTO customerDTO  = customerConverter.convertToDto(customerEntity);
 
+
         mav.addObject("TransactionType", TransactionType.transactionType());
 
         mav.addObject("modalAdd" ,customerDTO ) ;
+
+//      xử lý giao dịch của nhân viên
+        Long staffId ;
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")){
+            staffId = SecurityUtils.getPrincipal().getId();
+
+        }else{
+            staffId=null ;
+        }
+
+        List<TransactionEntity> listTransactionByCustomerId = transactionRepository.findTranSacTionbyCustomerId(id,staffId);
+        mav.addObject("listTranById",listTransactionByCustomerId ) ;
         return mav ;
     }
 

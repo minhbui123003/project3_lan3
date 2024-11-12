@@ -109,9 +109,12 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public void deletedCustomer(List<Long> ids) {
-        for(Long id : ids)
-        {
-           customerRepository.deleteById(id);
+        for (Long id : ids) {
+            CustomerEntity customer = customerRepository.findById(id).orElse(null);
+            if (customer != null) {
+                customer.setIsActive(false); // Chuyển trạng thái is_active về false (0)
+                customerRepository.save(customer); // Lưu lại khách hàng đã cập nhật
+            }
         }
     }
 

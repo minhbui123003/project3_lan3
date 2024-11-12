@@ -34,6 +34,8 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
 //    hàm truy vấn câu lệnh thông thường
 
     public static void queryNomal( Map<String,Object> params, StringBuilder sql){
+        sql.append(" AND customer.is_active = 1 "); // Thêm điều kiện kiểm tra is_active
+
         for(Map.Entry<String,Object> it:params.entrySet()){
             if(!it.getKey().equals("managementStaff") && !it.getKey().startsWith("d")){
                 String value = String.valueOf(it.getValue());
