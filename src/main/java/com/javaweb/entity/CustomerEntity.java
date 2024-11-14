@@ -116,8 +116,8 @@ public class CustomerEntity extends BaseEntity  {
     public void setTransactionEntities(List<TransactionEntity> transactionEntities) {
         this.transactionEntities = transactionEntities;
     }
-    public CustomerEntity() {
-        this.isActive = true; // Thiết lập mặc định cho khách hàng mới
-    }
+//    public CustomerEntity() {
+//        this.isActive = true; // Thiết lập mặc định cho khách hàng mới
+//    }
 
 }

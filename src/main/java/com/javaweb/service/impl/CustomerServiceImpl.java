@@ -92,6 +92,7 @@ public class CustomerServiceImpl implements ICustomerService {
         CustomerEntity cusEntity = modelMapper.map(customerDTO, CustomerEntity.class);
 
         // Lưu hoặc cập nhật nếu có id thì là cập nhật , chưa có thì là luuw
+        cusEntity.setIsActive(true);
         cusEntity = customerRepository.save(cusEntity);
 
         // Kiểm tra nếu người dùng hiện tại có vai trò là nhân viên ("ROLE_STAFF") và thao tác này là cập nhật khách hàng.

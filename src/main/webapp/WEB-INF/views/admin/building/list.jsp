@@ -398,6 +398,17 @@
   </div><!-- /.main-content -->
 
 <style>
+#btnSearchBuilding {
+  font-size: 16px; /* Increase font size */
+  padding: 8px 12px; /* Adjust padding for a larger button */
+  transition: transform 0.2s ease, border-radius 0.2s ease;
+}
+
+#btnSearchBuilding:hover {
+  transform: translateY(-3px);
+  border-radius: 12px; /* Adjust as needed for more rounded corners on hover */
+}
+
 
 .font-18{
   margin-top: 5px;
@@ -442,6 +453,24 @@
 .pagination a.previous, .pagination a.next {
     font-weight: bold;
 }
+.btn-group .btn {
+  transition: transform 0.2s ease;
+}
+
+.btn-group .btn:hover {
+  transform: translateY(-3px);
+}
+.btn-group .btn,
+.pull-right .btn {
+  transition: transform 0.2s ease, border-radius 0.2s ease;
+}
+
+.btn-group .btn:hover,
+.pull-right .btn:hover {
+  transform: translateY(-3px);
+  border-radius: 10px; /* Increase this value to round more on hover */
+}
+
 
 </style>
 
